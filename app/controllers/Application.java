@@ -1,16 +1,12 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-
-import java.util.*;
-
-import models.*;
+import play.mvc.Controller;
+import constants.Pages;
 
 public class Application extends Controller {
 
     public static void index() {
-        render();
+        render(Pages.LOGIN);
     }
 
 }

@@ -3,7 +3,10 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
+GET     /                                       Home.index
+# Login page
+GET     /login                                	Auth.index
+POST	/login									Auth.checkLogin
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

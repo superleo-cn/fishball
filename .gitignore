@@ -8,6 +8,9 @@
 # Folder or System Files
 /eclipse
 /.settings
+/modules
 /.project
 /.classpath
 /temp
+/tmp
+/logs
