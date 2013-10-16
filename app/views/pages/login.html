@@ -2,8 +2,8 @@
 #{set title:'Login' /}
 
 <form id="loginForm" method="post" action="@{Auth.checkLogin}">
-	<p>Please Sign in your account.</p>
-	<input type="text" name="user.username" id="username" value="" placeholder="Please input your login ID">
-	<input type="password" name="user.password" id="password" value="" placeholder="Please input your password">
-	<input type="submit" value="Sign In">
+	<p>&{'login.tip'}</p>
+	<input type="text" name="user.username" id="username" value="" placeholder="&{'login.label.username'}">
+	<input type="password" name="user.password" id="password" value="" placeholder="&{'login.label.password'}">
+	<input type="submit" value="&{'login.btn.login'}">
 </form>

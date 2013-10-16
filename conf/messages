@@ -1,3 +1,7 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
 #
+login.tip=Please Sign in your account:
+login.label.username=Please input your login ID
+login.label.password=Please input your password
+login.btn.login=Sign In

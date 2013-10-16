@@ -3,13 +3,11 @@ package controllers;
 import models.User;
 import play.Logger;
 import play.cache.Cache;
-import play.mvc.Controller;
-import sun.net.www.protocol.http.AuthCache;
+import play.i18n.Lang;
 import constants.Constants;
 import constants.Pages;
 
 public class Auth extends Basic {
-	
 
     public static void index() {
         render(Pages.LOGIN);
@@ -23,7 +21,7 @@ public class Auth extends Basic {
 			session.put(Constants.CURRENT_USERNAME, user.username);
 			session.put(Constants.CURRENT_USER_REALNAME, user.realname);
 			Cache.set(session.getId(), user);
-			redirect("/home");
+			render(Pages.HOME);
     	}
     	Logger.info("Login unsuccesfully");
     	render(Pages.LOGIN);
