@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>  
+	<head>
+		<title>Fish ball - #{get 'title' /}</title>
+		<meta charset="${_response_encoding}">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+		#{include 'includes/javascript.html' /}
+		#{get 'moreStyles' /}
+		#{get 'moreScripts' /}
+	</head>
+  	<body>
+  		<div data-role="page" data-dom-cache="false">
+  			<div data-role="header" data-theme="c">
+  				<h1>#{get 'title' /}</h1>
+  			</div>
+			<div data-role="content">
+				#{doLayout /}	
+			</div>
+			<div data-role="footer" data-theme="c">
+				<h1>About US</h1>
+			</div>	
+  		</div>
+	</body>
+</html>
