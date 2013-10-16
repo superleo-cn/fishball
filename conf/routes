@@ -7,6 +7,8 @@ GET     /                                       Home.index
 # Login page
 GET     /login                                	Auth.index
 POST	/login									Auth.checkLogin
+GET		/users									Users.index
+*		/users/list								Users.list
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -1,0 +1,7 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+login.tip=请输入您的登陆信息:
+login.label.username=请输入您的用户名
+login.label.password=请输入您的密码
+login.btn.login=登录

@@ -1,0 +1,73 @@
+#{extends '/layout/default.html' /} 
+#{set title:'User List' /}
+
+#{set 'moreScripts'} 
+	<script type='text/javascript'>
+	$(function() {
+		// load bulletins
+		doPage();
+		
+	});	
+	
+	function loadUserList(){
+		$.getJSON("@{Users.list()}", function(data){
+			if(data){
+				$(data.recordList).each(function(i){
+					var html = "<li class='workBox'>";
+					html += "<a href=''>";
+					html += "<h3>" + this.realname + "(" + this.status + ")</h3>";
+					html += "<p class='topic'><strong>" + this.usertype + "</strong></p>";
+					html += "<p class='ui-li-aside'><strong>4:48</strong>PM</p>";
+					html += "</a>";
+					html += "<a href='#' class='delete'>Delete</a>";
+					html += "</li>";
+					$("#list").append(html);
+				});
+				$('#list').listview('refresh');
+			}
+		});		
+	}
+	
+	function doPage(){
+		loadUserList();
+		$("#list").infinitescroll({  
+			loading: {
+				finishedMsg: "No more data...",
+				msgText: "<em>Loading..</em>",
+				speed: "slow"
+			},
+			state: {
+				isDuringAjax: false,
+				isInvalidPage: false,
+				isDestroyed: false,
+				isDone: false, // For when it goes all the way through the archive.
+				isPaused: false,
+				currPage: 1
+			},
+            navSelector: ".manu",     //nothing... 
+            nextSelector: ".manu a",  
+            itemSelector: ".workBox " ,             
+            animate: false,  
+            maxPage: undefined,
+			extraScrollPx: 50,
+			infid: 1,
+        });  
+	}
+	</script>
+#{/set} 
+
+<ul id="list" class="touch" data-role="listview" data-icon="false" data-split-icon="delete" data-split-theme="c">
+	
+</ul>
+
+<div id="confirm" class="ui-content" data-role="popup" data-theme="none">
+	<p id="question">Are you sure you want to delete</p>
+   	<div class="ui-grid-a">
+    	<div class="ui-block-a">
+       		<a id="yes" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Yes</a>
+      	</div>
+        <div class="ui-block-b">
+        	<a id="cancel" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Cancel</a>
+      	</div>
+	</div>
+</div><!-- /popup -->

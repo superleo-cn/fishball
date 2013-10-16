@@ -15,5 +15,8 @@ public class Pages {
 	
 	// Home page
 	public static String HOME = PAGE_FOLDER + "/home.html";
+	
+	// User page
+	public static String USER_LIST = PAGE_FOLDER + "/userList.html";
 
 }
