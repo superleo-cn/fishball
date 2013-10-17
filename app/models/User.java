@@ -8,11 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 
 import play.data.validation.Required;
 import utils.PaginationList;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 
@@ -61,9 +63,15 @@ public class User {
 	 * @param pageSize
 	 * @return
 	 */
-	public static PaginationList search(PaginationList paginationList) {
+	public static PaginationList search(String queryName, PaginationList paginationList) {
 		paginationList = paginationList == null ? new PaginationList() : paginationList;
-		PagingList<User> pagingList = Ebean.find(User.class).where().findPagingList(paginationList.pageSize);
+		ExpressionList expList = Ebean.find(User.class).where();
+		if(StringUtils.isNotEmpty(queryName)){
+			queryName = StringUtils.trimToNull(queryName);
+			expList.where().ilike("realname", "%" + queryName + "%");
+		}
+		PagingList<User> pagingList = expList.findPagingList(paginationList.pageSize);
+		pagingList.setFetchAhead(false);
 		Page page = pagingList.getPage(paginationList.currentPage);
 		paginationList.recordList = page.getList();
 		paginationList.pageCount = page.getTotalPageCount();

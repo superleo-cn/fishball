@@ -8,6 +8,13 @@
 		#{include 'includes/javascript.html' /}
 		#{get 'moreStyles' /}
 		#{get 'moreScripts' /}
+		<script type='text/javascript'>
+			$(function() {
+				$("a[data-ajax='false']").on("click", function(){
+					$.mobile.showPageLoadingMsg();	
+				});
+			});	
+		</script>
 	</head>
   	<body>
   		<div data-role="page" data-dom-cache="false">

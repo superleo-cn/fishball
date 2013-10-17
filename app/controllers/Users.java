@@ -15,8 +15,8 @@ public class Users extends Basic {
 		render(Pages.USER_LIST);
 	}
 	
-	public static void list(PaginationList paginationList) {
-		paginationList = User.search(paginationList);
+	public static void list(String queryName, PaginationList paginationList) {
+		paginationList = User.search(queryName, paginationList);
 		renderJSON(paginationList);
 	}
    
