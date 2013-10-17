@@ -5,7 +5,7 @@ import play.Logger;
 import play.cache.Cache;
 import play.mvc.Controller;
 import sun.net.www.protocol.http.AuthCache;
-import utils.PaginationList;
+import utils.Pagination;
 import constants.Constants;
 import constants.Pages;
 
@@ -15,9 +15,9 @@ public class Users extends Basic {
 		render(Pages.USER_LIST);
 	}
 	
-	public static void list(String queryName, PaginationList paginationList) {
-		paginationList = User.search(queryName, paginationList);
-		renderJSON(paginationList);
+	public static void list(String queryName, Pagination pagination) {
+		pagination = User.search(queryName, pagination);
+		renderJSON(pagination);
 	}
    
 }

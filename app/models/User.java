@@ -11,7 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import play.data.validation.Required;
-import utils.PaginationList;
+import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
@@ -63,19 +63,19 @@ public class User {
 	 * @param pageSize
 	 * @return
 	 */
-	public static PaginationList search(String queryName, PaginationList paginationList) {
-		paginationList = paginationList == null ? new PaginationList() : paginationList;
+	public static Pagination search(String queryName, Pagination pagination) {
+		pagination = pagination == null ? new Pagination() : pagination;
 		ExpressionList expList = Ebean.find(User.class).where();
 		if(StringUtils.isNotEmpty(queryName)){
 			queryName = StringUtils.trimToNull(queryName);
 			expList.where().ilike("realname", "%" + queryName + "%");
 		}
-		PagingList<User> pagingList = expList.findPagingList(paginationList.pageSize);
+		PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
 		pagingList.setFetchAhead(false);
-		Page page = pagingList.getPage(paginationList.currentPage);
-		paginationList.recordList = page.getList();
-		paginationList.pageCount = page.getTotalPageCount();
-		paginationList.recordCount = page.getTotalRowCount();
-		return paginationList;
+		Page page = pagingList.getPage(pagination.currentPage);
+		pagination.recordList = page.getList();
+		pagination.pageCount = page.getTotalPageCount();
+		pagination.recordCount = page.getTotalRowCount();
+		return pagination;
 	}
 }
