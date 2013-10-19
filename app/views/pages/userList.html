@@ -46,7 +46,8 @@
     				$('#list').listview('refresh');
     				currentPage++;
     			}else{
-    				alert("No More Data...");
+    				$.mobile.showPageLoadingMsg("No More Data...", "No spinner", true);
+    				alert(1);
     				isLastPage = true;
     			}
             	
