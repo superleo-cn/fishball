@@ -17,5 +17,4 @@ public class Pagination {
 	public Pagination() {
 	}
 
-	
 }

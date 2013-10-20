@@ -9,9 +9,9 @@ import constants.Constants;
 import constants.Pages;
 
 public class Home extends Basic {
-	
-    public static void index() {
-        render(Pages.HOME);
-    }
-   
+
+	public static void index() {
+		render(Pages.HOME);
+	}
+
 }
