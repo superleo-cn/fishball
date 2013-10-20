@@ -22,7 +22,7 @@ import com.avaje.ebean.PagingList;
 @Table(name = "tb_user")
 public class User {
 	@Id
-	public int id;
+	public Integer id;
 	@Required(message = "Username cannot be empty")
 	public String username;
 	@Required(message = "Password cannot be empty")
@@ -43,13 +43,6 @@ public class User {
 	public Date lastLoginDate;
 
 	/* the following are service methods */
-	/**
-	 * Checking the login user login successfully or not
-	 * 
-	 * @param user
-	 *            passing from submitted form
-	 * @return user or null
-	 */
 	public static User login(User user) {
 		List<User> users = Ebean.find(User.class).where().eq("username", user.username).eq("password", user.password)
 				.eq("status", Boolean.TRUE).findList();
@@ -59,14 +52,10 @@ public class User {
 		return null;
 	}
 
-	/**
-	 * @param pageSize
-	 * @return
-	 */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
 		ExpressionList expList = Ebean.find(User.class).where();
-		if(StringUtils.isNotEmpty(queryName)){
+		if (StringUtils.isNotEmpty(queryName)) {
 			queryName = StringUtils.trimToNull(queryName);
 			expList.where().ilike("realname", "%" + queryName + "%");
 		}
@@ -77,5 +66,25 @@ public class User {
 		pagination.pageCount = page.getTotalPageCount();
 		pagination.recordCount = page.getTotalRowCount();
 		return pagination;
+	}
+
+	public static User view(Integer id) {
+		if(id != null){
+			return Ebean.find(User.class, id);
+		}
+		return null;
+	}
+
+	public static void view(User user) {
+		if (user.id != null && user.id > 0) {
+			Ebean.update(user);
+		} else {
+			Ebean.save(user);
+		}
+	}
+
+	public static boolean delete(Integer id) {
+		Integer flag = Ebean.delete(User.class, id);
+		return (flag > 0) ? true : false;
 	}
 }

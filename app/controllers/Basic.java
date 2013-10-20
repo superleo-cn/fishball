@@ -1,7 +1,6 @@
 package controllers;
 
 import inteceptors.ConstantsInterceptor;
-import inteceptors.Secure;
 import inteceptors.TimeInterceptor;
 
 import java.io.File;
@@ -14,7 +13,6 @@ import org.apache.commons.lang.StringUtils;
 
 import play.Logger;
 import play.Play;
-import play.cache.Cache;
 import play.mvc.Before;
 import play.mvc.Catch;
 import play.mvc.Controller;
@@ -28,11 +26,12 @@ public class Basic extends Controller {
 	@Before(unless = { "Auth.login", "Auth.logout" })
 	static void checkAuthentification() {
 		if (StringUtils.isEmpty(session.get(Constants.CURRENT_USERNAME))) {
-			//flash.put("error", "You need login first");
-			//Auth.index();
+			// flash.put("error", "You need login first");
+			// Auth.index();
 		}
-		//TODO: refactor
-		//Cache.safeSet(Constants.GLOBLE_FACILITIES, Facility.findAll(), "365d");
+		// TODO: refactor
+		// Cache.safeSet(Constants.GLOBLE_FACILITIES, Facility.findAll(),
+		// "365d");
 	}
 
 	@Catch(Exception.class)
@@ -44,7 +43,7 @@ public class Basic extends Controller {
 	public static void finalExecute() {
 
 	}
-	
+
 	public static void uploadFile(File imgFile) {
 		File file = Play.getFile("/public/uploads");
 		String filename = imgFile.getName();

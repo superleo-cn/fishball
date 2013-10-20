@@ -10,44 +10,47 @@
 	$(function() {
 		listUsers();
 		$("#queryForm").submit(function() {
-			currentPage = 0;
-			isLastPage = false;
-			$('#list').empty();
-			loadUserList();
+			resetUserList();
 			return false;
 		});
 	});	
 	
+	function resetUserList(){
+		currentPage = 0;
+		isLastPage = false;
+		$('#list').empty();
+		loadUserList();
+	}
+	
 	function loadUserList(){
-		$.ajax({url: "@{Users.list()}",
+		$.ajax({
+			url: "@{Users.list()}",
             dataType: "json",
             data:{"queryName" : $("#queryName").val(), "pagination.currentPage" : currentPage},
             async: true,
             type: "post",
             beforeSend: function() {
-                $.mobile.showPageLoadingMsg(true);
+            	$.mobile.showPageLoadingMsg(true);
             },
             complete: function() {
-                $.mobile.hidePageLoadingMsg();
+            	$.mobile.hidePageLoadingMsg();
             },
             success: function (data) {
             	if(data && data.recordList && data.recordList.length > 0){
     				$(data.recordList).each(function(i){
     					var html = "<li>";
-    					html += "<a href=''>";
+    					html += "<a href='@{Users.view()}/" + this.id + "'>";
     					html += "<h3>" + this.realname + "</h3>";
     					html += "<p class='topic'><strong>" + this.usertype + "</strong></p>";
     					html += "<p class='ui-li-aside'><strong>Status:" + this.status ? "Active" : "Inactive" + "</strong></p>";
     					html += "</a>";
-    					html += "<a href='javascript:deleteUser(" + this.id + ")' class='delete'>Delete</a>";
+    					html += "<a href='javascript:deleteDialog(" + this.id + ")' class='delete'>Delete</a>";
     					html += "</li>";
     					$("#list").append(html);
     				});
     				$('#list').listview('refresh');
     				currentPage++;
     			}else{
-    				$.mobile.showPageLoadingMsg("No More Data...", "No spinner", true);
-    				alert(1);
     				isLastPage = true;
     			}
             	
@@ -57,7 +60,27 @@
             }
         });
 		
-		
+	}
+	
+	function deleteUser(id){
+		$.ajax({
+			url: "@{Users.delete()}/" + id,
+            dataType: "json",
+            data:{},
+            async: false,
+            type: "get",
+            beforeSend: function() {
+            },
+            complete: function() {
+            },
+            success: function (data) {
+            	resetUserList();
+            	showMessage(data.messages);
+            },
+            error: function (request,error) {
+                //alert('Network error has occurred please try again!');
+            }
+        });
 	}
 	
 	function listUsers(){
@@ -72,26 +95,26 @@
                    	// Load content here 
                    	if(!isLastPage){
                 		loadUserList();
+                   	}else{
+                   		showMessage('No more records found');
                    	}
                 }
             }
         });
 	}
 	
-	function deleteUser(id){
-		$( "#confirm" ).popup( "open" );
+	function deleteDialog(id){
+		$("#confirm").popup("open");
         // Proceed when the user confirms
-        $( "#confirm #yes" ).one( "click", function() {
-            // Remove with a transition
-            alert("delete" + id);
-            $( "#confirm #cancel" ).off();
+        $("#confirm #yes").one("click", function(){
+        	deleteUser(id);
+            $("#confirm #cancel").off();
+            
         });
         // Remove active state and unbind when the cancel button is clicked
-        $( "#confirm #cancel" ).one( "click", function() {
-            alert("no action" + id);
-            $( "#confirm #yes" ).off();
+        $("#confirm #cancel").one("click", function(){
+            $("#confirm #yes").off();
         });
-
 	}
 
 	</script>

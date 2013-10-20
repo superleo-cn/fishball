@@ -5,8 +5,8 @@ import constants.Pages;
 
 public class Application extends Controller {
 
-    public static void index() {
-        render(Pages.LOGIN);
-    }
+	public static void index() {
+		render(Pages.LOGIN);
+	}
 
 }

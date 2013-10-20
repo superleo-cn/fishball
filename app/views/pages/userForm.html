@@ -1,0 +1,37 @@
+#{extends '/layout/default.html' /} 
+#{set title:'User Form' /}
+
+#{set 'moreScripts'} 
+	<script type='text/javascript'>
+	$(function() {
+		
+	});	
+	</script>
+#{/set} 
+
+<form id="form" method="post" action="@{Users.store()}">
+	<input type="hidden" name="user.id" value="${user?.id}" />
+	<h2>User Form</h2>
+	<div data-role="fieldcontain" class="no-field-separator">
+	<label for="text-basic">Username:</label>
+	<input type="text" name="user.username" id="username" value="${user?.username}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+	<label for="text-basic">Realname:</label>
+	<input type="text" name="user.realname" id="realname" value="${user?.realname}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+	<label for="text-basic">User Type:</label>
+	<input type="text" name="user.usertype" id="usertype" value="${user?.usertype}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+	<label for="status">Status:</label>
+	<select name="user.status" id="status" data-role="slider">
+	    <option value="off">Off</option>
+	    <option value="on">On</option>
+	</select>
+	</div>
+</form>
