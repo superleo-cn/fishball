@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import play.data.validation.Required;
+import utils.MyBeanUtils;
 import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
@@ -40,11 +41,14 @@ public class User {
 
 	public Date createDate;
 
+	public Date modifiedDate;
+
 	public Date lastLoginDate;
 
 	/* the following are service methods */
 	public static User login(User user) {
-		List<User> users = Ebean.find(User.class).where().eq("username", user.username).eq("password", user.password)
+		List<User> users = Ebean.find(User.class).where()
+				.eq("username", user.username).eq("password", user.password)
 				.eq("status", Boolean.TRUE).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
@@ -59,7 +63,8 @@ public class User {
 			queryName = StringUtils.trimToNull(queryName);
 			expList.where().ilike("realname", "%" + queryName + "%");
 		}
-		PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
+		PagingList<User> pagingList = expList
+				.findPagingList(pagination.pageSize);
 		pagingList.setFetchAhead(false);
 		Page page = pagingList.getPage(pagination.currentPage);
 		pagination.recordList = page.getList();
@@ -69,15 +74,24 @@ public class User {
 	}
 
 	public static User view(Integer id) {
-		if(id != null){
+		if (id != null) {
 			return Ebean.find(User.class, id);
 		}
 		return null;
 	}
 
-	public static void view(User user) {
+	public static void store(User user) {
 		if (user.id != null && user.id > 0) {
-			Ebean.update(user);
+			User newUser = Ebean.find(User.class, user.id);
+			try {
+				newUser.realname = user.realname;
+				newUser.status = user.status;
+				newUser.usertype = user.usertype;
+				newUser.modifiedDate = new Date();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Ebean.update(newUser);
 		} else {
 			Ebean.save(user);
 		}

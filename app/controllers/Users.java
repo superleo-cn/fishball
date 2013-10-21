@@ -21,12 +21,16 @@ public class Users extends Basic {
 	}
 
 	public static void view(Integer id) {
-		render(Pages.USER_FORM, User.view(id));
+		User user = User.view(id);
+		render(Pages.USER_FORM, user);
 	}
 	
+	@Transactional
 	public static void store(User user) {
-		Users.store(user);
-		index();
+		User.store(user);
+		Map data = new HashMap();
+		data.put("messages", "Store User Successfully.");
+		renderJSON(data);
 	}
 
 	@Transactional

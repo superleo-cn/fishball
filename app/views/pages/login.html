@@ -3,7 +3,7 @@
 
 <form id="loginForm" method="post" action="@{Auth.checkLogin}">
 	<p>&{'login.tip'}</p>
-	<input type="text" name="user.username" id="username" value="" placeholder="&{'login.label.username'}">
-	<input type="password" name="user.password" id="password" value="" placeholder="&{'login.label.password'}">
+	<input type="text" name="user.username" id="username" value="${user?.username}" placeholder="&{'login.label.username'}">
+	<input type="password" name="user.password" id="password" value="${user?.username}" placeholder="&{'login.label.password'}">
 	<input type="submit" value="&{'login.btn.login'}">
 </form>
