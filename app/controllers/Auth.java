@@ -13,7 +13,7 @@ public class Auth extends Basic {
 		render(Pages.LOGIN);
 	}
 
-	public static void checkLogin(User user) {
+	public static void login(User user) {
 		User result = User.login(user);
 		if (result != null) {
 			Logger.info("Login successfully");
@@ -21,15 +21,21 @@ public class Auth extends Basic {
 			session.put(Constants.CURRENT_USERNAME, user.username);
 			session.put(Constants.CURRENT_USER_REALNAME, user.realname);
 			Cache.set(session.getId(), user);
-			render(Pages.HOME);
+			Logger.info(flash.get("errors"));
+			Home.index();
+		}else{
+			Logger.info("Login unsuccesfully");
+			flash.put("errors", "login failed.");
+			render(Pages.LOGIN);
 		}
-		Logger.info("Login unsuccesfully");
-		render(Pages.LOGIN);
+		
 	}
 
 	public static void logout() {
 		Cache.delete(session.getId());
-		session.clear();
+		session.remove(Constants.CURRENT_USER_REALNAME);
+		session.remove(Constants.CURRENT_USERNAME);
+		session.remove(Constants.CURRENT_USERID);
 		index();
 	}
 }

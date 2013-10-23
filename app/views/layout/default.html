@@ -9,11 +9,21 @@
 		#{get 'moreStyles' /}
 		#{get 'moreScripts' /}
 		<script type='text/javascript'>
-			$(function() {
+			$(document).on("pageshow", function() {
 				$("a[data-ajax='false']").on("click", function(){
 					$.mobile.showPageLoadingMsg();	
 				});
+				
+				//display error messages
+				#{errors}
+					showPopup('${error}')
+				#{/errors}
+				#{if flash.errors}
+					showPopup('${flash.errors}')
+				#{/if}
+
 			});	
+
 		</script>
 	</head>
   	<body>
@@ -26,16 +36,17 @@
 				#{doLayout /}	
 			</div>
 			<div data-role="footer" data-theme="c" data-position="fixed">
-				<h1>About US</h1>
+				<h1>About Me</h1>
 			</div>	
 			
 			<div data-role="panel" id="left-panel" data-theme="c">
 		        <ul data-role="listview" data-theme="d">
 		            <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
 		            <li data-role="list-divider">Menu</li>
+		            <li data-icon="delete"><a href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
 		            <li data-icon="back"><a href="@{Home.index()}" data-ajax="false">Home</a></li>
 		        </ul>
-		    </div><!-- /panel -->
+		    </div><!-- /panel -->		    
   		</div>
 	</body>
 </html>

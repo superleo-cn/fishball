@@ -4,3 +4,7 @@ function showMessage(msg){
     	$.mobile.hidePageLoadingMsg();
   	}, 3000);
 }
+
+function showPopup(msg){
+	$.mobile.showPageLoadingMsg($.mobile.pageLoadErrorMessageTheme, msg, true);
+}

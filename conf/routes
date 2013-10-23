@@ -6,7 +6,7 @@
 GET     /                                       Home.index
 # Login page
 GET     /login                                	Auth.index
-POST	/login									Auth.checkLogin
+POST	/login									Auth.login
 # User Operation
 *		/users									Users.index
 *		/users/list								Users.list

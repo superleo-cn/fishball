@@ -23,11 +23,11 @@ import constants.Constants;
 @With(value = { TimeInterceptor.class, ConstantsInterceptor.class })
 public class Basic extends Controller {
 
-	@Before(unless = { "Auth.login", "Auth.logout" })
+	@Before(unless = { "Auth.index", "Auth.login", "Auth.logout"})
 	static void checkAuthentification() {
 		if (StringUtils.isEmpty(session.get(Constants.CURRENT_USERNAME))) {
 			// flash.put("error", "You need login first");
-			// Auth.index();
+			Auth.index();
 		}
 		// TODO: refactor
 		// Cache.safeSet(Constants.GLOBLE_FACILITIES, Facility.findAll(),
