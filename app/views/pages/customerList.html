@@ -1,5 +1,5 @@
 #{extends '/layout/default.html' /} 
-#{set title:'User List' /}
+#{set title:'Customer List' /}
 
 #{set 'moreScripts'} 
 	<script type='text/javascript'>
@@ -10,24 +10,24 @@
 	
 	$(document).on("pageinit", function() {
 		enableScroll();
-		loadUserList();
+		loadCustomerList();
 		//search users
 		$("#queryForm").submit(function(event) {
 			event.preventDefault();
-			resetUserList();
+			resetCustomerList();
 		});
 	});	
 	
-	function resetUserList(){
+	function resetCustomerList(){
 		currentPage = 0;
 		isLastPage = false;
 		$('#list').empty();
-		loadUserList();
+		loadCustomerList();
 	}
 	
-	function loadUserList(){
+	function loadCustomerList(){
 		$.ajax({
-			url: "@{Users.list()}",
+			url: "@{Customers.list()}",
             dataType: "json",
             data:{"queryName" : $("#queryName").val(), "pagination.currentPage" : currentPage},
             async: true,
@@ -42,9 +42,9 @@
             	if(data && data.recordList && data.recordList.length > 0){
     				$(data.recordList).each(function(i){
     					var html = "<li>";
-    					html += "<a href='@{Users.view()}/" + this.id + "' data-ajax='false'>";
-    					html += "<h3>" + this.realname + "</h3>";
-    					html += "<p class='topic'><strong>" + this.usertype + "</strong></p>";
+    					html += "<a href='@{Customers.view()}/" + this.id + "' data-ajax='false'>";
+    					html += "<h3>" + this.companyName + "</h3>";
+    					html += "<p class='topic'><strong>" + this.name + "</strong></p>";
     					html += "<p class='ui-li-aside'><strong>Status:" + this.status ? "Active" : "Inactive" + "</strong></p>";
     					html += "</a>";
     					html += "<a href='javascript:deleteDialog(" + this.id + ")' class='delete'>Delete</a>";
@@ -66,9 +66,9 @@
 		
 	}
 	
-	function deleteUser(id){
+	function deleteCustomer(id){
 		$.ajax({
-			url: "@{Users.delete()}/" + id,
+			url: "@{Customers.delete()}/" + id,
             dataType: "json",
             data:{},
             async: false,
@@ -78,7 +78,7 @@
             complete: function() {
             },
             success: function (data) {
-            	resetUserList();
+            	resetCustomerList();
             	showMessage(data.messages);
             },
             error: function (request,error) {
@@ -98,7 +98,7 @@
                 if ($(this).scrollTop() + $(this).height() >= ($(document).height() - count)) {
                    	// Load content here 
                    	if(!isLastPage){
-                		loadUserList();
+                		loadCustomerList();
                    	}else{
                    		showMessage('No more records found');
                    	}
@@ -111,7 +111,7 @@
 		$("#confirm").popup("open");
         // Proceed when the user confirms
         $("#confirm #yes").one("click", function(){
-        	deleteUser(id);
+        	deleteCustomer(id);
             $("#confirm #cancel").off();
             
         });
@@ -126,7 +126,7 @@
 
 <form id="queryForm">
 	<div style="height:70px;">
-		<input type="search" name="queryName" id="queryName" value="" placeholder="Search The User Name...">
+		<input type="search" name="queryName" id="queryName" value="" placeholder="Search The Customer Name...">
 	</div>
 	
 	<ul id="list" data-role="listview" data-icon="false" data-split-icon="delete" data-split-theme="c">

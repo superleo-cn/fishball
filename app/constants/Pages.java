@@ -19,5 +19,9 @@ public class Pages {
 	// User page
 	public static String USER_LIST = PAGE_FOLDER + "/userList.html";
 	public static String USER_FORM = PAGE_FOLDER + "/userForm.html";
+	
+	// Customer page
+	public static String CUSTOMER_LIST = PAGE_FOLDER + "/customerList.html";
+	public static String CUSTOMER_FORM = PAGE_FOLDER + "/customerForm.html";
 
 }
