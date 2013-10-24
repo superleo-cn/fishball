@@ -12,6 +12,11 @@ POST	/login									Auth.login
 *		/users/list								Users.list
 *		/users/view/{id}						Users.view
 *		/users/delete/{id}						Users.delete
+# Customer Operation
+*		/customers								Customers.index
+*		/customers/list							Customers.list
+*		/customers/view/{id}					Customers.view
+*		/customers/delete/{id}					Customers.delete
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

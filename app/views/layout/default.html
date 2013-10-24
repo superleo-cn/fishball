@@ -46,7 +46,19 @@
 		            <li data-icon="delete"><a href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
 		            <li data-icon="back"><a href="@{Home.index()}" data-ajax="false">Home</a></li>
 		        </ul>
-		    </div><!-- /panel -->		    
+		    </div><!-- /panel -->		  
+		    
+		    <div id="confirm" class="ui-content" data-role="popup" data-theme="none">
+				<p id="question">Are you sure you want to delete</p>
+			   	<div class="ui-grid-a">
+			    	<div class="ui-block-a">
+			       		<a id="yes" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Yes</a>
+			      	</div>
+			        <div class="ui-block-b">
+			        	<a id="cancel" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Cancel</a>
+			      	</div>
+				</div>
+			</div><!-- /popup -->
   		</div>
 	</body>
 </html>
