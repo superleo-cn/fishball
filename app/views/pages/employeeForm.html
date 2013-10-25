@@ -1,0 +1,22 @@
+#{extends '/layout/default.html' /}
+#{set title:'Employee Form' /}
+
+
+
+#{set 'moreScripts'}
+<script type='text/javascript'>
+    var save = saveEmployee;
+</script>
+#{/set}
+
+<form id="form" method="post">
+
+    <input type="hidden" name="employee.id" id="id" value="${employee?.id}">
+	<h2>Employee Form</h2>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Real Name:</label>
+		<input type="text" name="employee.realname" id="realname" value="${employee?.realname}" required>
+	</div>
+
+</form>

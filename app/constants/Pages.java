@@ -24,4 +24,8 @@ public class Pages {
 	public static String CUSTOMER_LIST = PAGE_FOLDER + "/customerList.html";
 	public static String CUSTOMER_FORM = PAGE_FOLDER + "/customerForm.html";
 
+
+    // Customer page
+    public static String EMPLOYEE_LIST = PAGE_FOLDER + "/employeeList.html";
+    public static String EMPLOYEE_FORM = PAGE_FOLDER + "/employeeForm.html";
 }

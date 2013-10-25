@@ -26,6 +26,32 @@ create table tb_customer (
   constraint pk_tb_customer primary key (id))
 ;
 
+create table tb_employee (
+  id                        integer auto_increment not null,
+  employee_code             varchar(255),
+  realname                  varchar(255),
+  nric                      varchar(255),
+  address                   varchar(255),
+  postal_code               varchar(255),
+  home_no                   varchar(255),
+  mobile_no                 varchar(255),
+  email                     varchar(255),
+  emergency_contact_name    varchar(255),
+  emergency_contact_no      varchar(255),
+  position                  varchar(255),
+  company_account           varchar(255),
+  date_hired                datetime,
+  date_end                  datetime,
+  salary                    double,
+  cpf                       double,
+  food_allowance            double,
+  transport_allowance       double,
+  mobile_allowance          double,
+  create_date               datetime,
+  modified_date             datetime,
+  constraint pk_tb_employee primary key (id))
+;
+
 create table tb_user (
   id                        integer auto_increment not null,
   username                  varchar(255),

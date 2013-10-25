@@ -1,0 +1,27 @@
+#{extends '/layout/default.html' /}
+#{set title:'Employee List' /}
+
+
+#{set 'moreScripts'}
+<script type='text/javascript'>
+	// current page
+	var currentPage = 0;
+	var isLastPage = true;
+
+    var navigationAdd = '/employees/add';
+
+    $(document).ready(function(){
+        loadEmployeeList();
+    });
+
+	</script>
+#{/set}
+<form id="queryForm">
+	<div style="height:70px;">
+		<input type="search" name="queryName" id="queryName" value="" placeholder="Search The User Name...">
+	</div>
+	
+	<ul id="list" data-role="listview" data-icon="false" data-split-icon="delete" data-split-theme="c">
+		
+	</ul>
+</form>

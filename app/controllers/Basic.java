@@ -60,4 +60,43 @@ public class Basic extends Controller {
 		renderJSON(map);
 	}
 
+
+    @Before(only = {"Employees.index"})
+    public static void navigationAdd(){
+        Map navigation = (Map) renderArgs.get("navigation");
+        if(navigation==null)
+            navigation = new HashMap();
+        navigation.put("add",true);
+        renderArgs.put("navigation", navigation);
+    }
+
+    @Before(only = {"Employees.add","Employees.view"})
+    public static void navigationSave(){
+        Map navigation = (Map) renderArgs.get("navigation");
+        if(navigation==null)
+            navigation = new HashMap();
+        navigation.put("save",true);
+        renderArgs.put("navigation", navigation);
+    }
+
+    @Before(only = {"Employees.index"})
+    public static void navigationList(){
+        Map navigation = (Map) renderArgs.get("navigation");
+        if(navigation==null)
+            navigation = new HashMap();
+        navigation.put("list",true);
+        renderArgs.put("navigation", navigation);
+    }
+
+    @Before(only = "Home.index")
+    public static void navigationNoBack(){
+
+        System.out.println("x");
+        Map navigation = (Map) renderArgs.get("navigation");
+        if(navigation==null)
+            navigation = new HashMap();
+        navigation.put("noback",true);
+        renderArgs.put("navigation", navigation);
+    }
+
 }

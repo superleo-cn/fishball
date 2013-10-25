@@ -7,9 +7,19 @@
 		<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
 		#{include 'includes/javascript.html' /}
 		#{get 'moreStyles' /}
-		#{get 'moreScripts' /}
+
 		<script type='text/javascript'>
-			$(document).on("pageshow", function() {
+			$(document).on("pageinit", function() {
+
+                $('#addButton').on('click',function(){
+                    $.mobile.changePage(navigationAdd);
+                });
+
+                $('#saveButton').on('click',function(){
+                    save($('#form'));
+                });
+
+
 				$("a[data-ajax='false']").on("click", function(){
 					$.mobile.showPageLoadingMsg();	
 				});
@@ -27,26 +37,34 @@
 		</script>
 	</head>
   	<body>
-  		<div data-role="page" data-dom-cache="false">
-  			<div data-role="header" data-theme="c" data-position="fixed">
+  		<div data-role="page" id="page" data-dom-cache="false">
+           #{get 'moreScripts' /}
+  			<div data-role="header" data-theme="a" data-position="fixed">
   				<h1>#{get 'title' /}</h1>
-  				<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a>
-  			</div>
+              #{if !navigation?.noback}
+                  <a data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="b">Back</a>
+              #{/if}
+              #{if navigation?.add}
+                <a id="addButton" data-role="button" data-icon="plus" data-theme="b" class="ui-btn-right">Add</a>
+              #{/if}
+              #{if navigation?.save}
+                  <a id="saveButton" data-role="button" data-icon="check" data-theme="b"  class="ui-btn-right">Save</a>
+              #{/if}
+            </div>
+
 			<div data-role="content">
 				#{doLayout /}	
 			</div>
-			<div data-role="footer" data-theme="c" data-position="fixed">
-				<h1>About Me</h1>
-			</div>	
-			
-			<div data-role="panel" id="left-panel" data-theme="c">
-		        <ul data-role="listview" data-theme="d">
-		            <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
-		            <li data-role="list-divider">Menu</li>
-		            <li data-icon="delete"><a href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
-		            <li data-icon="back"><a href="@{Home.index()}" data-ajax="false">Home</a></li>
-		        </ul>
-		    </div><!-- /panel -->		  
+              <div data-role="footer"  data-position="fixed">
+                  <div data-role="navbar" data-iconpos="top">
+                      <ul>
+                          <li><a data-icon="home" href="@{Home.index()}">Home</a></li>
+                          <li><a data-icon="star" href="#">Me</a></li>
+                          <li><a  data-icon="delete" href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
+                      </ul>
+                  </div>
+              </div>
+			<!-- /panel -->
 		    
 		    <div id="confirm" class="ui-content" data-role="popup" data-theme="none">
 				<p id="question">Are you sure you want to delete</p>

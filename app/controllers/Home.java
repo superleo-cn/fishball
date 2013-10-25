@@ -11,6 +11,7 @@ import constants.Pages;
 public class Home extends Basic {
 
 	public static void index() {
+        System.out.println("indrx");
 		render(Pages.HOME);
 	}
 
