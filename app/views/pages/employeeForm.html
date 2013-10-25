@@ -8,15 +8,110 @@
     var save = saveEmployee;
 </script>
 #{/set}
-
 <form id="form" method="post">
 
     <input type="hidden" name="employee.id" id="id" value="${employee?.id}">
 	<h2>Employee Form</h2>
-	
+
 	<div data-role="fieldcontain" class="no-field-separator">
-		<label for="text-basic">Real Name:</label>
+		<label for="employeeCode">Employee Code:</label>
+		<input type="text" name="employee.employeeCode" id="employeeCode" value="${employee?.employeeCode}" required>
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="realname">Real Name:</label>
 		<input type="text" name="employee.realname" id="realname" value="${employee?.realname}" required>
 	</div>
 
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="position">Position:</label>
+		<select name="employee.position" id="position" required>
+			<option ${employee?.position=='Sales'?'selected':''}>Sales</option>
+			<option ${employee?.position=='Supervisor'?'selected':''}>Supervisor</option>
+			<option ${employee?.position=='Driver'?'selected':''}>Driver</option>
+		</select>
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="nric">NRIC:</label>
+		<input type="text" name="employee.nric" id="nric" value="${employee?.nric}" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="address">Address:</label>
+		<textarea name="employee.address" id="address" required>${employee?.address}</textarea>
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="postalCode">Postal Code:</label>
+		<input type="text" name="employee.postalCode" id="postalCode" value="${employee?.postalCode}" required>
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+			<label for="homeNo">Home No:</label>
+			<input type="text" name="employee.homeNo" id="homeNo" value="${employee?.homeNo}" required>
+		</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="mobileNo">Mobile No:</label>
+		<input type="text" name="employee.mobileNo" id="mobileNo" value="${employee?.mobileNo}">
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="email">Email:</label>
+		<input type="text" name="employee.email" id="email" value="${employee?.email}">
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="emergencyContactName">Emergency Contact Name:</label>
+		<input type="text" name="employee.emergencyContactName" id="emergencyContactName" value="${employee?.emergencyContactName}">
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="emergencyContactNo">Emergency Contact No:</label>
+		<input type="text" name="employee.emergencyContactNo" id="emergencyContactNo" value="${employee?.emergencyContactNo}">
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="position">Company Account:</label>
+		<select name="employee.companyAccount" id="companyAccount">
+			<option ${employee?.companyAccount=='HSFood'?'selected':''}>HSFood </option>
+			<option ${employee?.companyAccount=='Hosay'?'selected':''}>Hosay</option>
+		</select>
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="dateHired">Date Hired:</label>
+		<input type="date" name="employee.dateHired" id="dateHired" value="${(employee?.dateHired)?.format('yyyy-MM-dd')}" required>
+
+	</div>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="dateEnd">Date End:</label>
+		<input type="date" name="employee.dateEnd" id="dateEnd" value="${(employee?.dateEnd)?.format('yyyy-MM-dd')}">
+	</div>
+
+	<div data-role="collapsible" >
+		 <h3>Salary</h3>
+		 <div data-role="fieldcontain" class="no-field-separator">
+			<label for="salary">Basic Salary:</label>
+			<input type="number" name="employee.salary" id="salary" value="${employee?.salary}" >
+		</div>
+		 <div data-role="fieldcontain" class="no-field-separator">
+			<label for="salary">CPF:</label>
+			<input type="number" name="employee.cpf" id="cpf" value="${employee?.cpf}" >
+		</div>
+		 <div data-role="fieldcontain" class="no-field-separator">
+			<label for="foodAllowance">Food Allowance:</label>
+			<input type="number" name="employee.foodAllowance" id="foodAllowance" value="${employee?.foodAllowance}" >
+		</div>
+		 <div data-role="fieldcontain" class="no-field-separator">
+			<label for="transportAllowance">Transport Allowance:</label>
+			<input type="number" name="employee.transportAllowance" id="transportAllowance" value="${employee?.transportAllowance}" >
+		</div>
+		 <div data-role="fieldcontain" class="no-field-separator">
+			<label for="mobileAllowance">Mobile Allowance:</label>
+			<input type="number" name="employee.mobileAllowance" id="mobileAllowance" value="${employee?.mobileAllowance}" >
+		</div>
+	</div>
 </form>

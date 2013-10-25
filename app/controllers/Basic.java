@@ -88,7 +88,7 @@ public class Basic extends Controller {
         renderArgs.put("navigation", navigation);
     }
 
-    @Before(only = "Home.index")
+    @Before(only = {"Home.index","Auth.index","Auth.login"})
     public static void navigationNoBack(){
 
         System.out.println("x");

@@ -41,8 +41,8 @@ function loadEmployeeList(){
                     var html = "<li>";
                     html += "<a href='/employees/view/" + this.id + "' >";
                     html += "<h3>" + this.realname + "</h3>";
-                    html += "<p class='topic'><strong></strong></p>";
-                    html += "<p class='ui-li-aside'><strong>Status:" + this.status ? "Active" : "Inactive" + "</strong></p>";
+                    html += "<p class='ui-li-desc'>Mobile:" + this.mobileNo+ ", Position :"+this.position+"</p>";
+                    html += "<p class='ui-li-desc'><strong>Status:" + this.status ? "Active" : "Inactive" + "</strong></p>";
                     html += "</a>";
                     html += "<a href='javascript:deleteDialog(" + this.id + ")' class='delete'>Delete</a>";
                     html += "</li>";
@@ -65,12 +65,14 @@ function loadEmployeeList(){
 
 function saveEmployee(form){
 
-    var that = form;
+    var valid = $(form).valid();
+    if(valid){
     $.post("/employees/store", form.serialize(), function (response) {
         //window.location.href = "@{Employees.index()}";
-        var editMode= $('#id',that).val();
+        var editMode= $('#id',form).val();
         if(!editMode)
             clearForm(that);
         showMessage('Successfully save employee');
     });
+    }
 }

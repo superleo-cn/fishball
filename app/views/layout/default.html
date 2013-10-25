@@ -52,9 +52,11 @@
               #{/if}
             </div>
 
-			<div data-role="content">
+			<div data-role="content"  data-theme="c">
 				#{doLayout /}	
 			</div>
+           #{if session?.username}
+
               <div data-role="footer"  data-position="fixed">
                   <div data-role="navbar" data-iconpos="top">
                       <ul>
@@ -64,6 +66,7 @@
                       </ul>
                   </div>
               </div>
+           #{/if}
 			<!-- /panel -->
 		    
 		    <div id="confirm" class="ui-content" data-role="popup" data-theme="none">
