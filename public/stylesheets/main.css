@@ -5,3 +5,13 @@
     margin: 1em 0;
     padding: 0;
 }
+LABEL.error {
+        width: 98%;
+        padding: 1%;
+        background: #c33;
+        color: #fff;
+        text-align: center;
+        display: block;
+        margin: 1% 0;
+        text-shadow: none;
+}

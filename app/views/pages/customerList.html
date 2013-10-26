@@ -7,6 +7,7 @@
 	var currentPage = 0;
 	var isLastPage = true;
 	
+	var navigationAdd = '@{Customers.view()}';
 	
 	$(document).on("pageinit", function() {
 		enableScroll();
@@ -44,7 +45,7 @@
     					var html = "<li>";
     					html += "<a href='@{Customers.view()}/" + this.id + "' data-ajax='false'>";
     					html += "<h3>" + this.companyName + "</h3>";
-    					html += "<p class='topic'><strong>" + this.name + "</strong></p>";
+    					html += "<p class='topic'><strong>" + this.companyAccount + "</strong></p>";
     					html += "<p class='ui-li-aside'><strong>Status:" + this.status ? "Active" : "Inactive" + "</strong></p>";
     					html += "</a>";
     					html += "<a href='javascript:deleteDialog(" + this.id + ")' class='delete'>Delete</a>";
@@ -124,7 +125,7 @@
 	</script>
 #{/set} 
 
-<form id="queryForm">
+<form id="queryForm" method="post" action="@{Customers.store()}">
 	<div style="height:70px;">
 		<input type="search" name="queryName" id="queryName" value="" placeholder="Search The Customer Name...">
 	</div>

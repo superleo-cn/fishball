@@ -7,11 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import play.data.validation.Required;
-import utils.MyBeanUtils;
 import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
@@ -39,11 +39,7 @@ public class User {
 
 	public String userIp;
 
-	public Date createDate;
-
-	public Date modifiedDate;
-
-	public Date lastLoginDate;
+	public Date createDate, modifiedDate, lastLoginDate;
 
 	/* the following are service methods */
 	public static User login(User user) {
@@ -84,9 +80,7 @@ public class User {
 		if (user.id != null && user.id > 0) {
 			User newUser = Ebean.find(User.class, user.id);
 			try {
-				newUser.realname = user.realname;
-				newUser.status = user.status;
-				newUser.usertype = user.usertype;
+				PropertyUtils.copyProperties(newUser, user);
 				newUser.modifiedDate = new Date();
 			} catch (Exception e) {
 				e.printStackTrace();

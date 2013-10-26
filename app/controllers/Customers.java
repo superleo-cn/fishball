@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import models.Customer;
-import models.User;
+import models.Customer;
 import utils.Pagination;
 
 import com.avaje.ebean.annotation.Transactional;
@@ -23,25 +23,25 @@ public class Customers extends Basic {
 	}
 
 	public static void view(Integer id) {
-		User user = User.view(id);
-		render(Pages.CUSTOMER_FORM, user);
+		Customer customer = Customer.view(id);
+		render(Pages.CUSTOMER_FORM, customer);
 	}
 	
 	@Transactional
-	public static void store(User user) {
-		User.store(user);
+	public static void store(Customer customer) {
+		Customer.store(customer);
 		Map data = new HashMap();
-		data.put("messages", "Store User Successfully.");
+		data.put("messages", "Store Customer Successfully.");
 		renderJSON(data);
 	}
 
 	@Transactional
 	public static void delete(Integer id) {
 		Map data = new HashMap();
-		if (User.delete(id)) {
-			data.put("messages", "Delete User Successfully.");
+		if (Customer.delete(id)) {
+			data.put("messages", "Delete Customer Successfully.");
 		} else {
-			data.put("messages", "Delete User failed.");
+			data.put("messages", "Delete Customer failed.");
 		}
 		renderJSON(data);
 	}

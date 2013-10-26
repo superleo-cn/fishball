@@ -17,6 +17,11 @@ POST	/login									Auth.login
 *		/customers/list							Customers.list
 *		/customers/view/{id}					Customers.view
 *		/customers/delete/{id}					Customers.delete
+# Supplier Operation
+*		/suppliers								Suppliers.index
+*		/suppliers/list							Suppliers.list
+*		/suppliers/view/{id}					Suppliers.view
+*		/suppliers/delete/{id}					Suppliers.delete
 # Employee Operation
 *		/employees								Employees.index
 *		/employees/list							Employees.list

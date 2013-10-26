@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>  
 	<head>
@@ -84,3 +85,90 @@
   		</div>
 	</body>
 </html>
+=======
+<!DOCTYPE html>
+<html>  
+	<head>
+		<title>Fish ball - #{get 'title' /}</title>
+		<meta charset="${_response_encoding}">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+		#{include 'includes/javascript.html' /}
+		#{get 'moreStyles' /}
+
+		<script type='text/javascript'>
+			$(document).on("pageinit", function() {
+
+                $('#addButton').on('click',function(){
+                    $.mobile.changePage(navigationAdd);
+                });
+
+                $('#saveButton').on('click',function(){
+                    save($('#form'));
+                });
+
+
+				$("a[data-ajax='false']").on("click", function(){
+					$.mobile.showPageLoadingMsg();	
+				});
+				
+				//display error messages
+				#{errors}
+					showPopup('${error}')
+				#{/errors}
+				#{if flash.errors}
+					showPopup('${flash.errors}')
+				#{/if}
+
+			});	
+
+		</script>
+	</head>
+  	<body>
+  		<div data-role="page" id="page" data-dom-cache="false">
+           #{get 'moreScripts' /}
+  			<div data-role="header" data-theme="a" data-position="fixed">
+  				<h1>#{get 'title' /}</h1>
+              #{if !navigation?.noback}
+                  <a data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="b">Back</a>
+              #{/if}
+              #{if navigation?.add}
+                <a id="addButton" data-role="button" data-icon="plus" data-theme="b" class="ui-btn-right">Add</a>
+              #{/if}
+              #{if navigation?.save}
+                  <a id="saveButton" data-role="button" data-icon="check" data-theme="b"  class="ui-btn-right">Save</a>
+              #{/if}
+            </div>
+
+			<div data-role="content"  data-theme="c">
+				#{doLayout /}	
+			</div>
+           #{if session?.username}
+
+              <div data-role="footer"  data-position="fixed">
+                  <div data-role="navbar" data-iconpos="top">
+                      <ul>
+                          <li><a data-icon="home" href="@{Home.index()}">Home</a></li>
+                          <li><a data-icon="star" href="#">Me</a></li>
+                          <li><a  data-icon="delete" href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
+                      </ul>
+                  </div>
+              </div>
+           #{/if}
+			<!-- /panel -->
+		    
+		    <div id="confirm" class="ui-content" data-role="popup" data-theme="none">
+				<p id="question">Are you sure you want to delete</p>
+			   	<div class="ui-grid-a">
+			    	<div class="ui-block-a">
+			       		<a id="yes" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Yes</a>
+			      	</div>
+			        <div class="ui-block-b">
+			        	<a id="cancel" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Cancel</a>
+			      	</div>
+				</div>
+			</div><!-- /popup -->
+  		</div>
+	</body>
+</html>
+>>>>>>> 94621b5f64090df2b83485801b6d7879459206b4

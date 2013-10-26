@@ -7,11 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import play.data.validation.Required;
-import utils.MyBeanUtils;
 import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
@@ -45,15 +46,9 @@ public class Customer {
 	
 	public String name;
 
-	public String nric;
+	public String nric, nricPic;
 
-	public String nricPic;
-	
-	public String phone1;
-	
-	public String phone2;
-	
-	public String phone3;
+	public String phone1, phone2, phone3;
 	
 	public String email;
 	
@@ -67,13 +62,10 @@ public class Customer {
 	
 	public String salesRep;
 	
-	public String driverAlocation;
+	public String driverLocation;
 	
-	public Date createDate;
+	public Date createDate, modifiedDate;
 
-	public Date modifiedDate;
-	
-	
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
 		ExpressionList expList = Ebean.find(Customer.class).where();
@@ -81,6 +73,7 @@ public class Customer {
 			queryName = StringUtils.trimToNull(queryName);
 			expList.where().ilike("customerCode", "%" + queryName + "%");
 		}
+		expList.orderBy("createDate desc");
 		PagingList<Customer> pagingList = expList
 				.findPagingList(pagination.pageSize);
 		pagingList.setFetchAhead(false);
@@ -89,6 +82,34 @@ public class Customer {
 		pagination.pageCount = page.getTotalPageCount();
 		pagination.recordCount = page.getTotalRowCount();
 		return pagination;
+	}
+	
+	public static Customer view(Integer id) {
+		if (id != null) {
+			return Ebean.find(Customer.class, id);
+		}
+		return null;
+	}
+
+	public static void store(Customer customer) {
+		if (customer.id != null && customer.id > 0) {
+			Customer newCustomer = Ebean.find(Customer.class, customer.id);
+			try {
+				PropertyUtils.copyProperties(newCustomer, customer);
+				newCustomer.modifiedDate = new Date();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Ebean.update(newCustomer);
+		} else {
+			customer.createDate = new Date();
+			Ebean.save(customer);
+		}
+	}
+
+	public static boolean delete(Integer id) {
+		Integer flag = Ebean.delete(Customer.class, id);
+		return (flag > 0) ? true : false;
 	}
 
 }

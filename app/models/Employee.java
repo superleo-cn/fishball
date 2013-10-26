@@ -4,7 +4,9 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.lang.StringUtils;
 import play.data.validation.Required;
 import utils.Pagination;
@@ -90,7 +92,15 @@ public class Employee {
             System.out.println("UPDATE");
 			Employee existingEmployee = Ebean.find(Employee.class, employee.id);
 			try {
-                existingEmployee.realname = employee.realname;
+                Employee tmpEmployee = new Employee();
+                java.util.Date defaultValue = null;
+                DateConverter converter = new DateConverter(defaultValue);
+                ConvertUtils.register(converter, java.util.Date.class);
+
+                BeanUtils.copyProperties(tmpEmployee, existingEmployee);
+
+                BeanUtils.copyProperties(existingEmployee,employee);
+                existingEmployee.createDate = tmpEmployee.createDate;
                 existingEmployee.modifiedDate = new Date();
 			} catch (Exception e) {
 				e.printStackTrace();

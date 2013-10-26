@@ -20,7 +20,7 @@ create table tb_customer (
   credit_limit              varchar(255),
   credit_terms              varchar(255),
   sales_rep                 varchar(255),
-  driver_alocation          varchar(255),
+  driver_location           varchar(255),
   create_date               datetime,
   modified_date             datetime,
   constraint pk_tb_customer primary key (id))
@@ -50,6 +50,27 @@ create table tb_employee (
   create_date               datetime,
   modified_date             datetime,
   constraint pk_tb_employee primary key (id))
+;
+
+create table tb_supplier (
+  id                        integer auto_increment not null,
+  supplier_code             varchar(255),
+  status                    tinyint(1) default 0,
+  company_account           varchar(255),
+  company_name              varchar(255),
+  company_address           varchar(255),
+  company_post_code         varchar(255),
+  company_phone_no          varchar(255),
+  company_fax               varchar(255),
+  company_email             varchar(255),
+  name                      varchar(255),
+  phone1                    varchar(255),
+  phone2                    varchar(255),
+  phone3                    varchar(255),
+  email                     varchar(255),
+  create_date               datetime,
+  modified_date             datetime,
+  constraint pk_tb_supplier primary key (id))
 ;
 
 create table tb_user (
