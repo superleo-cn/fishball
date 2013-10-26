@@ -1,0 +1,98 @@
+#{extends '/layout/default.html' /} 
+#{set title:'Supplier Form' /}
+
+#{set 'moreScripts'} 
+	<script type='text/javascript'>
+	
+	var save = function(form){
+        $.post("@{Suppliers.store()}", $(form).serialize(), function (response) {
+            window.location.href = "@{Suppliers.index()}";
+        });
+	};
+	
+	$(document).on("pageinit", function() {
+		var status = '${supplier?.status}';
+		$("#status").val(status).slider("refresh");
+	});	
+	
+	</script>
+#{/set} 
+
+<form id="form" method="post">
+	<input type="hidden" name="supplier.id" value="${supplier?.id}" />
+	<h2>Supplier Form</h2>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Supplier Code:</label>
+		<input type="text" name="supplier.supplierCode" id="supplierCode" value="${supplier?.supplierCode}" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="status">Status:</label>
+		<select name="supplier.status" id="status" data-role="slider">
+		    <option value="false">Off</option>
+		    <option value="true">On</option>
+		</select>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Account:</label>
+		<input type="text" name="supplier.companyAccount" id="companyAccount" value="${supplier?.companyAccount}" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Name:</label>
+		<input type="text" name="supplier.companyName" id="companyName" value="${supplier?.companyName}" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Address:</label>
+		<input type="text" name="supplier.companyAddress" id="companyAddress" value="${supplier?.companyAddress}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Postal Code:</label>
+		<input type="text" name="supplier.companyPostCode" id="companyPostCode" value="${supplier?.companyPostCode}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Phone No.:</label>
+		<input type="text" name="supplier.companyPhoneNo" id="companyPhoneNo" value="${supplier?.companyPhoneNo}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Fax:</label>
+		<input type="text" name="supplier.companyFax" id="companyFax" value="${supplier?.companyFax}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Email:</label>
+		<input type="text" name="supplier.companyEmail" id="companyEmail" value="${supplier?.companyEmail}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Name:</label>
+		<input type="text" name="supplier.name" id="name" value="${supplier?.name}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Phone1:</label>
+		<input type="text" name="supplier.phone1" id="phone1" value="${supplier?.phone1}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Phone2:</label>
+		<input type="text" name="supplier.phone2" id="phone2" value="${supplier?.phone2}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Phone3:</label>
+		<input type="text" name="supplier.phone3" id="phone3" value="${supplier?.phone3}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Email:</label>
+		<input type="text" name="supplier.email" id="email" value="${supplier?.email}">
+	</div>
+
+</form>

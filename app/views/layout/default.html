@@ -19,11 +19,10 @@
                     save($('#form'));
                 });
 
+			});	
+			
+			$(document).on("pageshow", function() {
 
-				$("a[data-ajax='false']").on("click", function(){
-					$.mobile.showPageLoadingMsg();	
-				});
-				
 				//display error messages
 				#{errors}
 					showPopup('${error}')
@@ -39,31 +38,36 @@
   	<body>
   		<div data-role="page" id="page" data-dom-cache="false">
            #{get 'moreScripts' /}
-  			<div data-role="header" data-theme="a" data-position="fixed">
+  			<div data-role="header" data-theme="c" data-position="fixed">
   				<h1>#{get 'title' /}</h1>
               #{if !navigation?.noback}
-                  <a data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="b">Back</a>
+                  <a data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="c">Back</a>
               #{/if}
               #{if navigation?.add}
-                <a id="addButton" data-role="button" data-icon="plus" data-theme="b" class="ui-btn-right">Add</a>
+                <a id="addButton" data-role="button" data-icon="plus" data-theme="c" class="ui-btn-right">Add</a>
               #{/if}
               #{if navigation?.save}
-                  <a id="saveButton" data-role="button" data-icon="check" data-theme="b"  class="ui-btn-right">Save</a>
+                  <a id="saveButton" data-role="button" data-icon="check" data-theme="c"  class="ui-btn-right">Save</a>
               #{/if}
             </div>
 
-			<div data-role="content">
+			<div data-role="content"  data-theme="c">
 				#{doLayout /}	
 			</div>
-              <div data-role="footer"  data-position="fixed">
+           #{if session?.username}
+
+           #{if session?.username}
+
+              <div data-role="footer" data-position="fixed" data-theme="c">
                   <div data-role="navbar" data-iconpos="top">
                       <ul>
                           <li><a data-icon="home" href="@{Home.index()}">Home</a></li>
                           <li><a data-icon="star" href="#">Me</a></li>
-                          <li><a  data-icon="delete" href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
+                          <li><a data-icon="delete" href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
                       </ul>
                   </div>
               </div>
+           #{/if}
 			<!-- /panel -->
 		    
 		    <div id="confirm" class="ui-content" data-role="popup" data-theme="none">

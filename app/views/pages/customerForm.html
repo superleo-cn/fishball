@@ -1,0 +1,137 @@
+#{extends '/layout/default.html' /} 
+#{set title:'Customer Form' /}
+
+#{set 'moreScripts'} 
+	<script type='text/javascript'>
+	
+	var save = function(form){
+        $.post("@{Customers.store()}", $(form).serialize(), function (response) {
+            window.location.href = "@{Customers.index()}";
+        });
+	};
+	
+	$(document).on("pageinit", function() {
+		var status = '${customer?.status}';
+		$("#status").val(status).slider("refresh");
+	});	
+	
+	</script>
+#{/set} 
+
+<form id="form" method="post">
+	<input type="hidden" name="customer.id" value="${customer?.id}" />
+	<h2>Customer Form</h2>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Customer Code:</label>
+		<input type="text" name="customer.customerCode" id="customerCode" value="${customer?.customerCode}" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="status">Status:</label>
+		<select name="customer.status" id="status" data-role="slider">
+		    <option value="false">Off</option>
+		    <option value="true">On</option>
+		</select>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Name:</label>
+		<input type="text" name="customer.companyName" id="companyName" value="${customer?.companyName}" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Address:</label>
+		<input type="text" name="customer.companyAddress" id="companyAddress" value="${customer?.companyAddress}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Postal Code:</label>
+		<input type="text" name="customer.companyPostCode" id="companyPostCode" value="${customer?.companyPostCode}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Phone No.:</label>
+		<input type="text" name="customer.companyPhoneNo" id="companyPhoneNo" value="${customer?.companyPhoneNo}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Fax:</label>
+		<input type="text" name="customer.companyFax" id="companyFax" value="${customer?.companyFax}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Company Email:</label>
+		<input type="text" name="customer.companyEmail" id="companyEmail" value="${customer?.companyEmail}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Name:</label>
+		<input type="text" name="customer.name" id="name" value="${customer?.name}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">NRIC:</label>
+		<input type="text" name="customer.nric" id="nric" value="${customer?.nric}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Phone1:</label>
+		<input type="text" name="customer.phone1" id="phone1" value="${customer?.phone1}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Phone2:</label>
+		<input type="text" name="customer.phone2" id="phone2" value="${customer?.phone2}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Phone3:</label>
+		<input type="text" name="customer.phone3" id="phone3" value="${customer?.phone3}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Email:</label>
+		<input type="text" name="customer.email" id="email" value="${customer?.email}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="status">Customer Type:</label>
+		#{select 'customer.customerPayment', value:customer?.customerPayment, id:'customerPayment'}
+			#{option 'admin'}Admin#{/option}
+			#{option 'operator'}Operator#{/option}
+		#{/select}
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="status">Customer Payment:</label>
+		#{select 'customer.customerType', value:customer?.customerType, id:'customerType'}
+			#{option 'admin'}Admin#{/option}
+			#{option 'operator'}Operator#{/option}
+		#{/select}
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Credit Limit:</label>
+		<input type="text" name="customer.creditLimit" id="creditLimit" value="${customer?.creditLimit}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Credit Terms:</label>
+		<input type="text" name="customer.creditTerms" id="creditTerms" value="${customer?.creditTerms}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Sales Rep:</label>
+		<input type="text" name="customer.salesRep" id="salesRep" value="${customer?.salesRep}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Driver Location:</label>
+		<input type="text" name="customer.driverLocation" id="driverLocation" value="${customer?.driverLocation}">
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<input type="submit" data-theme="b" value="Save">
+	</div>
+</form>

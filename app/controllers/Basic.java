@@ -61,7 +61,7 @@ public class Basic extends Controller {
 	}
 
 
-    @Before(only = {"Employees.index"})
+    @Before(only = {"Employees.index","Customers.index","Suppliers.index"})
     public static void navigationAdd(){
         Map navigation = (Map) renderArgs.get("navigation");
         if(navigation==null)
@@ -70,7 +70,7 @@ public class Basic extends Controller {
         renderArgs.put("navigation", navigation);
     }
 
-    @Before(only = {"Employees.add","Employees.view"})
+    @Before(only = {"Employees.view","Customers.view","Suppliers.view"})
     public static void navigationSave(){
         Map navigation = (Map) renderArgs.get("navigation");
         if(navigation==null)
@@ -79,7 +79,7 @@ public class Basic extends Controller {
         renderArgs.put("navigation", navigation);
     }
 
-    @Before(only = {"Employees.index"})
+    @Before(only = {"Employees.index","Customers.index","Suppliers.index"})
     public static void navigationList(){
         Map navigation = (Map) renderArgs.get("navigation");
         if(navigation==null)
@@ -88,7 +88,7 @@ public class Basic extends Controller {
         renderArgs.put("navigation", navigation);
     }
 
-    @Before(only = "Home.index")
+    @Before(only = {"Home.index","Auth.index","Auth.login"})
     public static void navigationNoBack(){
 
         System.out.println("x");
