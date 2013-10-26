@@ -3,15 +3,16 @@
 
 #{set 'moreScripts'} 
 	<script type='text/javascript'>
+	
+	var save = function(form){
+        $.post("@{Users.store()}", $(form).serialize(), function (response) {
+            window.location.href = "@{Users.index()}";
+        });
+	};
+	
 	$(document).on("pageinit", function() {
 		var status = '${user?.status}';
 		$("#status").val(status).slider("refresh");
-		$("#form").submit(function(event) {
-			event.preventDefault();
-	        $.post("@{Users.store()}", $(this).serialize(), function (response) {
-	            window.location.href = "@{Users.index()}";
-	        });
-		});
 	});	
 	
 	
@@ -24,7 +25,7 @@
 	<h2>User Form</h2>
 	<div data-role="fieldcontain" class="no-field-separator">
 		<label for="text-basic">User Name:</label>
-		#{if user.id == null || user.id == 0}
+		#{if user?.id == null || user?.id == 0}
 			<input type="text" name="user.username" id="username" value="${user?.username}" required>
 		#{/if}
 		#{else}
