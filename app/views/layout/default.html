@@ -47,8 +47,9 @@
 				}
 			});	
 			
-			$(document).on("pageshow", function() {
+			$(document).on("pageshow", function(event,ui) {
 
+				$(ui.prevPage).remove();
 				//display error messages
 				#{errors}
 					showPopup('${error}')
