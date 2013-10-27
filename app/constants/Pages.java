@@ -28,7 +28,12 @@ public class Pages {
 	public static String SUPPLIER_LIST = PAGE_FOLDER + "/supplierList.html";
 	public static String SUPPLIER_FORM = PAGE_FOLDER + "/supplierForm.html";
 	
-    // Employer page
+    // Employee page
     public static String EMPLOYEE_LIST = PAGE_FOLDER + "/employeeList.html";
     public static String EMPLOYEE_FORM = PAGE_FOLDER + "/employeeForm.html";
+
+    // Appraisal page
+    public static String APPRAISAL_LIST = PAGE_FOLDER + "/appraisalList.html";
+    public static String APPRAISAL_FORM = PAGE_FOLDER + "/appraisalForm.html";
+
 }

@@ -1,5 +1,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+drop table tb_appraisal;
+
 drop table tb_customer;
 
 drop table tb_employee;

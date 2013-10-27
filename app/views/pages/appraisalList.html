@@ -1,0 +1,103 @@
+#{extends '/layout/default.html' /}
+#{set title:'Appraisal List' /}
+
+
+#{set 'moreScripts'}
+<script type='text/javascript'>
+	// current page
+	console.log('Initialize Appraisal List');
+
+	initializeListPage('@{Appraisals.add()}','@{Home.index()}', function(){
+    	enableScrolling(loadAppraisalList);
+ 	   resetAppraisalList();
+   		
+	});
+
+	function deleteAppraisal(id){
+
+		var deleteIt = function ()
+		{$.ajax({
+			url: "@{Appraisals.delete()}/" + id,
+            dataType: "json",
+            async: false,
+            type: "get",
+            beforeSend: function() {
+            },
+            complete: function() {
+            },
+            success: function (data) {
+            	resetAppraisalList();
+            	showPopup(data.messages);
+            },
+            error: function (request,error) {
+                //alert('Network error has occurred please try again!');
+            }
+        });
+		}
+
+		deleteDialog2(deleteIt);
+	}
+
+	function resetAppraisalList(){
+	    currentPage = 0;
+	    scrollOK = true;
+	    isLastPage = true;
+	    $('.listItems').empty();
+        loadAppraisalList();
+	}
+
+	function loadAppraisalList(){
+	    $.ajax({
+	        url: "/appraisals/list",
+	        dataType: "json",
+	        data:{"queryName" : $("#queryName").val(), "pagination.currentPage" : currentPage},
+	        async: true,
+	        type: "post",
+	        beforeSend: function() {
+	            $.mobile.showPageLoadingMsg(true);
+	        },
+	        complete: function() {
+	            $.mobile.hidePageLoadingMsg();
+	        },
+	        success: function (data) {
+	            if(data && data.recordList && data.recordList.length > 0){
+	                $(data.recordList).each(function(i){
+	                    var html = "<li>";
+	                    var that = this;
+	                    html += "<a href='/appraisals/view/" + that.id + "' >";
+	                    html += "<h3>" + (that.employee?that.employee.realname:'Unknown') + "</h3>";
+	                    html += "<p class='ui-li-desc'>" + that.description+ "</p>";
+	                    html += "<p class='ui-li-desc'><strong>Action:" + that.action + "</strong></p>";
+						html += "<p class='ui-li-aside ui-li-desc'><strong>" + that.appraisalDate + "</strong></p>";
+	                    html += "</a>";
+	                    html += "<a href='javascript:deleteAppraisal("+that.id+")'>Delete</a>";
+	                    html += "</li>";
+	                    $(".listItems").append(html);
+	                });
+	                $('.listItems').listview('refresh');
+	                currentPage++;
+	                isLastPage = false;
+	            }else{
+	                isLastPage = true;
+	            }
+
+	        },
+	        error: function (request,error) {
+	            //alert('Network error has occurred please try again!');
+	        }
+	    });
+
+	}
+
+
+	</script>
+#{/set}
+<form id="queryForm">
+	<div style="height:70px;">
+		<input type="search" name="queryName" id="queryName" value="" placeholder="Search The User Name...">
+	</div>
+
+	<ul class="listItems" data-role="listview" data-icon="false" data-split-icon="delete" data-split-theme="c">
+
+	</ul>
+</form>

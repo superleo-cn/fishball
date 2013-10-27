@@ -1,0 +1,49 @@
+#{extends '/layout/default.html' /}
+#{set title:'Appraisal Form' /}
+
+#{set 'moreScripts'}
+<script type='text/javascript'>
+    console.log('Initialize Appraisal Form');
+
+    initializeFormPage('@{Appraisals.index()}', saveAppraisal);
+
+    function saveAppraisal(form){
+
+        var valid = $(form).valid();
+        if(true){
+        $.post("/appraisals/store", form.serialize(), function (response) {
+            var editMode= $('#id',form).val();
+            if(!editMode)
+                clearForm(form);
+            showMessage('Successfully save Appraisal');
+        });
+        }
+    }
+
+    
+</script>
+#{/set}
+<form id="form" method="post">
+
+    <input type="hidden" name="appraisal.id" id="id" value="${appraisal?.id}">
+	<h2>Appraisal Form</h2>
+
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="employee">Employee :</label>
+		<input type="text" name="appraisal.employee.id" id="employee" value="${appraisal?.employee?.id}" required>
+	</div>
+    <div data-role="fieldcontain" class="no-field-separator">
+        <label for="appraisalDate">Date:</label>
+        <input type="date" name="appraisal.appraisalDate" id="appraisalDate" value="${(appraisal?.appraisalDate)?.format('yyyy-MM-dd')}" required>
+
+    </div>
+    <div data-role="fieldcontain" class="no-field-separator">
+        <label for="description">Description:</label>
+        <textarea name="appraisal.description" id="description">${appraisal?.description}</textarea>
+    </div>
+    <div data-role="fieldcontain" class="no-field-separator">
+        <label for="action">Action:</label>
+        <textarea name="appraisal.action" id="action">${appraisal?.action}</textarea>
+    </div>
+
+</form>

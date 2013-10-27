@@ -1,11 +1,26 @@
 #{extends '/layout/default.html' /}
 #{set title:'Employee Form' /}
 
-
-
 #{set 'moreScripts'}
 <script type='text/javascript'>
-    var save = saveEmployee;
+
+	console.log('Initialize Employee Form');
+	initializeFormPage('@{Employees.index()}', saveEmployee);
+
+	function saveEmployee(form){
+
+	    var valid = $(form).valid();
+	    if(true){
+	    $.post("/employees/store", form.serialize(), function (response) {
+	        //window.location.href = "@{Employees.index()}";
+	        var editMode= $('#id',form).val();
+	        if(!editMode)
+	            clearForm(form);
+	        showMessage('Successfully save employee');
+	    });
+	    }
+	}
+
 </script>
 #{/set}
 <form id="form" method="post">

@@ -1,18 +1,90 @@
-#{extends '/layout/default.html' /}
+	#{extends '/layout/default.html' /}
 #{set title:'Employee List' /}
 
 
 #{set 'moreScripts'}
 <script type='text/javascript'>
-	// current page
-	var currentPage = 0;
-	var isLastPage = true;
+	console.log('Initialize Employee List');
+    
+	initializeListPage('@{Employees.add()}','@{Home.index()}', function(){
+    	enableScrolling(loadEmployeeList);
+    	loadEmployeeList();
+	});
 
-    var navigationAdd = '/employees/add';
+	function deleteEmployee(id){
+		var deleteIt = function () {
+			$.ajax({
+				url: "@{Employees.delete()}/" + id,
+	            dataType: "json",
+	            async: false,
+	            type: "get",
+	            beforeSend: function() {
+	            },
+	            complete: function() {
+	            },
+	            success: function (data) {
+	            	resetEmployeeList();
+	            	showPopup(data.messages);
+	            },
+	            error: function (request,error) {
+	                //alert('Network error has occurred please try again!');
+	            }
+	        });
+        }
 
-    $(document).ready(function(){
-        loadEmployeeList();
-    });
+		deleteDialog2(deleteIt);    
+	}
+
+
+	function resetEmployeeList(){
+	    currentPage = 0;
+	    scrollOK = true;
+	    isLastPage = true;
+	    $('.listItems').empty();
+	    loadEmployeeList();
+	}
+
+	function loadEmployeeList(){
+	    $.ajax({
+	        url: "/employees/list",
+	        dataType: "json",
+	        data:{"queryName" : $("#queryName").val(), "pagination.currentPage" : currentPage},
+	        async: true,
+	        type: "post",
+	        beforeSend: function() {
+	            $.mobile.showPageLoadingMsg(true);
+	        },
+	        complete: function() {
+	            $.mobile.hidePageLoadingMsg();
+	        },
+	        success: function (data) {
+	            if(data && data.recordList && data.recordList.length > 0){
+	                $(data.recordList).each(function(i){
+	                    var html = "<li>";
+	                    html += "<a href='/employees/view/" + this.id + "' >";
+	                    html += "<h3>" + this.realname + "</h3>";
+	                    html += "<p class='ui-li-desc'>Mobile:" + this.mobileNo+ ", Position :"+this.position+"</p>";
+	                    html += "<p class='ui-li-desc'><strong>Status:" + this.status ? "Active" : "Inactive" + "</strong></p>";
+	                    html += "</a>";
+	                    html += "<a href='javascript:deleteEmployee("+this.id+")'>Delete</a>";
+	                       html += "</li>";
+	                    $(".listItems").append(html);
+	                });
+	                $('.listItems').listview('refresh');
+	                currentPage++;
+	                isLastPage = false;
+	            }else{
+	                isLastPage = true;
+	            }
+
+	        },
+	        error: function (request,error) {
+	            //alert('Network error has occurred please try again!');
+	        }
+	    });
+
+	}
+
 
 	</script>
 #{/set}
@@ -21,7 +93,7 @@
 		<input type="search" name="queryName" id="queryName" value="" placeholder="Search The User Name...">
 	</div>
 
-	<ul id="list" data-role="listview" data-icon="false" data-split-icon="delete" data-split-theme="c">
+	<ul class="listItems" data-role="listview" data-icon="false" data-split-icon="delete" data-split-theme="c">
 
 	</ul>
 </form>

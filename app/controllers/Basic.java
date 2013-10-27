@@ -60,7 +60,7 @@ public class Basic extends Controller {
 		renderJSON(map);
 	}
 
-	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index" })
+	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index","Appraisals.index" })
 	public static void navigationAdd() {
 		Map navigation = (Map) renderArgs.get("navigation");
 		if (navigation == null)
@@ -69,7 +69,7 @@ public class Basic extends Controller {
 		renderArgs.put("navigation", navigation);
 	}
 
-	@Before(only = { "Users.view", "Employees.view", "Customers.view", "Suppliers.view" })
+	@Before(only = { "Users.view", "Employees.view", "Customers.view", "Suppliers.view","Appraisals.view","Appraisals.add","Employees.add" })
 	public static void navigationSave() {
 		Map navigation = (Map) renderArgs.get("navigation");
 		if (navigation == null)
@@ -78,7 +78,7 @@ public class Basic extends Controller {
 		renderArgs.put("navigation", navigation);
 	}
 
-	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index" })
+	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index","Appraisals.index" })
 	public static void navigationList() {
 		Map navigation = (Map) renderArgs.get("navigation");
 		if (navigation == null)

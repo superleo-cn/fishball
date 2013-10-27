@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import play.data.validation.Required;
 import utils.Pagination;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -50,6 +51,7 @@ public class Employee {
 
 	public Date modifiedDate;
 
+	public Boolean status;
 
 	/* the following are service methods */
 	/*public static Employee login(Employee user) {
@@ -65,6 +67,7 @@ public class Employee {
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
 		ExpressionList expList = Ebean.find(Employee.class).where();
+        expList.where().eq("status",true);
 		if (StringUtils.isNotEmpty(queryName)) {
 			queryName = StringUtils.trimToNull(queryName);
 			expList.where().ilike("realname", "%" + queryName + "%");
@@ -108,6 +111,7 @@ public class Employee {
 			Ebean.update(existingEmployee);
 		} else {
             System.out.println("SAVE");
+            employee.status=true;
 			Ebean.save(employee);
 		}
 	}

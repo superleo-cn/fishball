@@ -1,11 +1,12 @@
 #{extends '/layout/default.html' /} 
 #{set title:'Home' /}
 
+
 #{set 'moreScripts'} 
 	<script type='text/javascript'>
-	$(document).on("pageinit", function() {
-		
-	});	
+    console.log('Initialize home');
+    callbackPageInit=undefined;
+    scrollOK = false;
 	</script>
 #{/set} 
 
@@ -30,7 +31,7 @@
     <ul data-role="listview">
     	<li><a href="@{Users.index()}" data-ajax="false">Users</a></li>
         <li><a href="@{Employees.index()}">Employee</a></li>
-        <li><a href="#">Appraisal</a></li>
+        <li><a href="@{Appraisals.index()}">Appraisal</a></li>
         <li><a href="#">Leaves</a></li>
     </ul>
 </div>

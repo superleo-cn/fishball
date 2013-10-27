@@ -1,3 +1,15 @@
+create table tb_appraisal (
+  id                        integer auto_increment not null,
+  create_date               datetime,
+  modified_date             datetime,
+  appraisal_date            datetime,
+  description               varchar(255),
+  action                    varchar(255),
+  status                    tinyint(1) default 0,
+  employee_id               integer,
+  constraint pk_tb_appraisal primary key (id))
+;
+
 create table tb_customer (
   id                        integer auto_increment not null,
   customer_code             varchar(255),
@@ -49,6 +61,7 @@ create table tb_employee (
   mobile_allowance          double,
   create_date               datetime,
   modified_date             datetime,
+  status                    tinyint(1) default 0,
   constraint pk_tb_employee primary key (id))
 ;
 
@@ -87,5 +100,7 @@ create table tb_user (
   constraint pk_tb_user primary key (id))
 ;
 
+alter table tb_appraisal add constraint fk_tb_appraisal_employee_1 foreign key (employee_id) references tb_employee (id) on delete restrict on update restrict;
+create index ix_tb_appraisal_employee_1 on tb_appraisal (employee_id);
 
 

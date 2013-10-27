@@ -15,7 +15,6 @@ public class Employees extends Basic {
 	}
 
     public static void add() {
-        navigationSave();
         render(Pages.EMPLOYEE_FORM);
     }
 

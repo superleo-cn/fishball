@@ -27,6 +27,11 @@ POST	/login									Auth.login
 *		/employees/list							Employees.list
 *		/employees/view/{id}					Employees.view
 *		/employees/delete/{id}					Employees.delete
+# Employee Operation
+*		/appraisals								Appraisals.index
+*		/appraisals/list						Appraisals.list
+*		/appraisals/view/{id}					Appraisals.view
+*		/appraisals/delete/{id}					Appraisals.delete
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

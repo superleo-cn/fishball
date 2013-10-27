@@ -15,64 +15,50 @@ function clearForm(form){
     $('textarea',form).val(''); // set text area value to blank
 }
 
-function resetEmployeeList(){
-    currentPage = 0;
-    isLastPage = false;
-    $('#list').empty();
-    loadEmployeeList();
-}
+function enableScrolling(callbck){
 
-function loadEmployeeList(){
-    $.ajax({
-        url: "/employees/list",
-        dataType: "json",
-        data:{"queryName" : $("#queryName").val(), "pagination.currentPage" : currentPage},
-        async: true,
-        type: "post",
-        beforeSend: function() {
-            $.mobile.showPageLoadingMsg(true);
-        },
-        complete: function() {
-            $.mobile.hidePageLoadingMsg();
-        },
-        success: function (data) {
-            if(data && data.recordList && data.recordList.length > 0){
-                $(data.recordList).each(function(i){
-                    var html = "<li>";
-                    html += "<a href='/employees/view/" + this.id + "' >";
-                    html += "<h3>" + this.realname + "</h3>";
-                    html += "<p class='ui-li-desc'>Mobile:" + this.mobileNo+ ", Position :"+this.position+"</p>";
-                    html += "<p class='ui-li-desc'><strong>Status:" + this.status ? "Active" : "Inactive" + "</strong></p>";
-                    html += "</a>";
-                    html += "<a href='javascript:deleteDialog(" + this.id + ")' class='delete'>Delete</a>";
-                    html += "</li>";
-                    $("#list").append(html);
-                });
-                $('#list').listview('refresh');
-                currentPage++;
-                isLastPage = false;
-            }else{
-                isLastPage = true;
-            }
+    scrollOK = true;
+    count    = 10;
+    afterScrollCallback = callbck;
 
-        },
-        error: function (request,error) {
-            //alert('Network error has occurred please try again!');
-        }
-    });
 
 }
 
-function saveEmployee(form){
-
-    var valid = $(form).valid();
-    if(valid){
-    $.post("/employees/store", form.serialize(), function (response) {
-        //window.location.href = "@{Employees.index()}";
-        var editMode= $('#id',form).val();
-        if(!editMode)
-            clearForm(that);
-        showMessage('Successfully save employee');
+function deleteDialog2(callbackDelete){
+	$("#confirm").popup("open");
+    // Proceed when the user confirms
+    $("#confirm #yes").one("click", function(){
+    	callbackDelete();
+        $("#confirm #cancel").off();
+        
     });
-    }
+    // Remove active state and unbind when the cancel button is clicked
+    $("#confirm #cancel").one("click", function(){
+        $("#confirm #yes").off();
+    });
+}
+
+function initializeDefaultPage() {
+
+}
+
+function initializeFormPage(navBack,saveCallback,pageInit) {
+
+    navigationBack = navBack;
+    console.log(navBack);
+    actionSave = saveCallback;
+    console.log(pageInit);
+	callbackPageInit=pageInit;
+    scrollOK = false;
+}
+
+function initializeListPage(navAdd,navBack,pageInit) {
+
+	currentPage = 0;
+	isLastPage = true;
+    scrollOK = true;
+    navigationAdd = navAdd;
+    navigationBack = navBack;
+    callbackPageInit = pageInit;
+
 }

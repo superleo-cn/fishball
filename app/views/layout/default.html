@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>  
 	<head>
@@ -10,20 +9,42 @@
 		#{get 'moreStyles' /}
 
 		<script type='text/javascript'>
+		// global variable
+		var callbackPageInit;
+		var currentPage = 0;
+		var navigationAdd,navigationBack;
+		var actionSave,actionDelete;
+		var isLastPage = true;
+		var scrollOK = false;
+        var count    = 10;
+        var afterScrollCallback;
+
 			$(document).on("pageinit", function() {
+				console.log('Page Init');
 
-                $('#addButton').on('click',function(){
-                    $.mobile.changePage(navigationAdd);
+                $('.addButton').on('click',function(){
+                    $.mobile.changePage(navigationAdd,{reloadPage :true});
                 });
 
-                $('#saveButton').on('click',function(){
-                    save($('#form'));
+                $('.backButton').on('click',function(){
+                    $.mobile.changePage(navigationBack,{reloadPage :true});
                 });
+
+                
+
+                $('.saveButton').on('click',function(){
+                    actionSave($('#form'));
+                });
+
 
 				$("a[data-ajax='false']").on("click", function(){
 					//$.mobile.showPageLoadingMsg();	
 				});
-                
+
+				if(typeof callbackPageInit!='undefined') {
+					console.log('Callback page init');
+                	callbackPageInit();
+				}
 			});	
 			
 			$(document).on("pageshow", function() {
@@ -38,21 +59,37 @@
 
 			});	
 
+			$(window).scroll(function () {
+		        if (scrollOK) {
+		            if ($(this).scrollTop() + $(this).height() >= ($(document).height() - count)) {
+		               	// Load content here 
+		               	if(!isLastPage && typeof afterScrollCallback!='undefined'){
+		            		afterScrollCallback();
+		               	}else{
+		               		scrollOK = false;
+		               		showMessage('No more records found');
+		               	}
+		            }
+		        }
+		    });
+
 		</script>
 	</head>
   	<body>
+
+
   		<div data-role="page" id="page" data-dom-cache="false">
            #{get 'moreScripts' /}
   			<div data-role="header" data-theme="c" data-position="fixed">
-  				<h1>#{get 'title' /}</h1>
+  			  <h1>#{get 'title' /}</h1>
               #{if !navigation?.noback}
-                  <a data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="c">Back</a>
+                  <a class="backButton" data-role="button"  data-icon="arrow-l" data-theme="c">Back</a>
               #{/if}
               #{if navigation?.add}
-                <a id="addButton" data-role="button" data-icon="plus" data-theme="c" class="ui-btn-right">Add</a>
+                <a class="addButton" data-role="button" data-icon="plus" data-theme="c" class="ui-btn-right">Add</a>
               #{/if}
               #{if navigation?.save}
-                  <a id="saveButton" data-role="button" data-icon="check" data-theme="c"  class="ui-btn-right">Save</a>
+                <a class="saveButton" data-role="button" data-icon="check" data-theme="c"  class="ui-btn-right">Save</a>
               #{/if}
             </div>
 
@@ -71,7 +108,7 @@
               </div>
            #{/if}
 			<!-- /panel -->
-		    
+
 		    <div id="confirm" class="ui-content" data-role="popup" data-theme="none">
 				<p id="question">Are you sure you want to delete</p>
 			   	<div class="ui-grid-a">
